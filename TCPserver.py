@@ -1,8 +1,14 @@
 import socket
 import time
+import sys
 
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Missing port: python .\\TCPserver.py <port>")
+        sys.exit(1)
+    PORT = int(sys.argv[1])
 # Constants
-PORT = 37  # Example port number
+#PORT = 37  # Example port number
 
 # Get current time in seconds since 1900
 def get_current_time():
@@ -12,10 +18,10 @@ def get_current_time():
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Bind the socket to the address and port
-server_socket.bind(('localhost', PORT))
-
+server_socket.bind(('', PORT))
+ 
 # Listen for incoming connections
-server_socket.listen(1)
+server_socket.listen()
 
 print("Server listening on port", PORT)
 
@@ -39,3 +45,4 @@ while True:
         # Close connection
         client_socket.close()
         print("Server has closed connection")
+        sys.exit(1)

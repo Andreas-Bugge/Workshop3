@@ -1,9 +1,16 @@
 import socket
 import time
+import sys
 
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Missing args: python .\\UDPclient.py <host>, <port>")
+        sys.exit(1)
+    PORT = int(sys.argv[2])
+    address = sys.argv[1]
 # Constants
-PORT = 37 # Example port number
-SERVER_ADDRESS = ('localhost', PORT)
+#PORT = 37 # Example port number
+SERVER_ADDRESS = (address, PORT)
 
 # Create UDP socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

@@ -1,14 +1,21 @@
 import socket
 import time
+import sys
 
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Missing args: python .\\TCPclient.py <host>, <port>")
+        sys.exit(1)
+    PORT = int(sys.argv[2])
+    address = sys.argv[1]
 # Constants
-PORT = 37  # Example port number
+#PORT = 37  # Example port number
 
 # Create TCP socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to server
-client_socket.connect(('localhost', PORT))
+client_socket.connect((address, PORT))
 
 print("Client connected on port", PORT)
 
