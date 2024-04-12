@@ -4,7 +4,7 @@ import sys
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print("Missing args: python .\\UDPclient.py <host>, <port>")
+        print("Missing args: python .\\tpudpclient.py <host>, <port>")
         sys.exit(1)
     PORT = int(sys.argv[2])
     address = sys.argv[1]

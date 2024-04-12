@@ -4,7 +4,7 @@ import sys
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Missing port: python .\\UDPserver.py <port>")
+        print("Missing port: python .\\tpudpserver.py <port>")
         sys.exit(1)
     PORT = int(sys.argv[1])
 # Constants

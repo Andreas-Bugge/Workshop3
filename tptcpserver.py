@@ -2,47 +2,50 @@ import socket
 import time
 import sys
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Missing port: python .\\TCPserver.py <port>")
-        sys.exit(1)
-    PORT = int(sys.argv[1])
-# Constants
-#PORT = 37  # Example port number
-
 # Get current time in seconds since 1900
 def get_current_time():
     return int(time.time()) + 2208988800
 
-# Create TCP socket
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Missing port: python .\\tptcpserver.py <port>")
+        sys.exit(1)
+    PORT = int(sys.argv[1])
 
-# Bind the socket to the address and port
-server_socket.bind(('', PORT))
- 
-# Listen for incoming connections
-server_socket.listen()
+    # Create TCP socket
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-print("Server listening on port", PORT)
+    # Bind the socket to the address and port
+    server_socket.bind(('', PORT))
+    
+    # Listen for incoming connections
+    server_socket.listen()
 
-while True:
-    # Accept incoming connection
-    client_socket, addr = server_socket.accept()
-    print("Server connected to", addr)
+    print("Server listening on port", PORT)
 
     try:
-        # Get current time
-        current_time = get_current_time()
+        while True:
+            # Accept incoming connection
+            client_socket, addr = server_socket.accept()
+            print("Server connected to", addr)
 
-        # Convert time to 32-bit big-endian byte representation
-        current_time_byte = current_time.to_bytes(4, 'big')
+            try:
+                # Get current time
+                current_time = get_current_time()
 
-        # Send time to client
-        client_socket.sendall(current_time_byte)
-        print("Server has sent the time:", current_time_byte)
+                # Convert time to 32-bit big-endian byte representation
+                current_time_byte = current_time.to_bytes(4, 'big')
 
-    finally:
-        # Close connection
-        client_socket.close()
-        print("Server has closed connection")
-        sys.exit(1)
+                # Send time to client
+                client_socket.sendall(current_time_byte)
+                print("Server has sent the time:", current_time_byte)
+
+            finally:
+                # Close connection
+                client_socket.close()
+                print("Server has closed connection")
+
+    except KeyboardInterrupt:
+        print("\nServer shutting down...")
+        server_socket.close()
+        sys.exit(0)
